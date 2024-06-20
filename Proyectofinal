@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Función para verificar si un grafo es euleriano
+bool esEuleriano(vector<vector<int>>& grafo) {
+    int numVertices = grafo.size();
+    int grado;
+    int nodosImpares = 0;
+
+    for (int i = 0; i < numVertices; ++i) {
+        grado = grafo[i].size();
+        if (grado % 2 != 0) {
+            nodosImpares++;
+        }
+    }
+
+    // Si hay 0 o 2 nodos de grado impar, es euleriano
+    return (nodosImpares == 0 || nodosImpares == 2);
+}
+
+// Función auxiliar para verificar si se puede visitar un vértice
+bool sePuedeVisitar(int v, vector<bool>& visitado, vector<vector<int>>& grafo) {
+    // Comprobar si hay más vértices adyacentes no visitados
+    for (int i = 0; i < grafo[v].size(); ++i) {
+        if (!visitado[grafo[v][i]]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Función para verificar si un grafo es hamiltoniano
+bool esHamiltoniano(vector<vector<int>>& grafo, vector<bool>& visitado, int v, int numVertices, int contador) {
+    if (contador == numVertices) {
+        // Verificar si el último vértice está conectado al primero
+        for (int i = 0; i < grafo[v].size(); ++i) {
+            if (grafo[v][i] == 0) {
+                return true;
+            }
+        }
+    }
+
+    for (int i = 0; i < grafo[v].size(); ++i) {
+        int adyacente = grafo[v][i];
+        if (!visitado[adyacente] && sePuedeVisitar(adyacente, visitado, grafo)) {
+            visitado[adyacente] = true;
+            if (esHamiltoniano(grafo, visitado, adyacente, numVertices, contador + 1)) {
+                return true;
+            }
+            visitado[adyacente] = false;
+        }
+    }
+    return false;
+}
+
+int main() {
+    // Representación de un grafo como lista de adyacencia
+    vector<vector<int>> grafo = {
+        {1, 2}, // Vértice 0 conectado con vértices 1 y 2
+        {0, 2}, // Vértice 1 conectado con vértices 0 y 2
+        {0, 1}  // Vértice 2 conectado con vértices 0 y 1
+    };
+
+    vector<bool> visitado(grafo.size(), false);
+    visitado[0] = true; // Comenzar desde el vértice 0
+
+    cout << "El grafo es euleriano? " << (esEuleriano(grafo) ? "Sí" : "No") << endl;
+    cout << "El grafo es hamiltoniano? " << (esHamiltoniano(grafo, visitado, 0, grafo.size(), 1) ? "Sí" : "No") << endl;
+
+    return 0;
+}
