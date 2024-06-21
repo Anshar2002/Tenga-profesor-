@@ -3,6 +3,10 @@
 #include <set>
 #include <stack>
 #include <iostream>
+#include <cstdlib>
+#include <algorithm>
+#include "algoritmo.h"
+
 using namespace std;
 
 class Grafo
@@ -38,6 +42,22 @@ bool es_bipartito(int src) {
                                      // Métodos para acceder y manipular vértices y aristas
     };
 }
+
+    struct Vertice
+    {
+        int id;
+        vector<int> vecinos;
+        bool visitado;
+    };
+
+
+ struct GrafoStruct
+    {
+        vector<Vertice> vertices;
+        vector<vector<int>> aristas; // Matriz de adyacencia o lista de adyacencia
+                                     // Métodos para acceder y manipular vértices y aristas
+    };
+
     bool verificarIsomorfismo(GrafoStruct &g1, GrafoStruct &g2)
     {
         // Comprobar el número de vértices y aristas
@@ -69,6 +89,7 @@ bool es_bipartito(int src) {
 
     for (int u = 0; u < V; ++u) {
         for (int v : grafo[u]) {
+             int color [];
             if (color[v] == -1) {
                 color[v] = 1 - color[u]; // Asignamos el color opuesto al vecino
             } else if (color[v] == color[u]) {
@@ -108,11 +129,11 @@ bool es_bipartito(int src) {
         }
      }
 }
+        }
 
         // Si no se encuentran discrepancias, los grafos son isomorfos
         return true;
     }
-
     // Función para colorear un grafo con el algoritmo voraz
 void coloreadoVoraz(vector<Vertice>& grafo) {
   // Inicializar colores
@@ -161,7 +182,7 @@ void mostrarColoracion(const vector<Vertice>& grafo) {
     bool es_completo() {
         for (int i = 0; i < V; ++i) {
             if (grafo[i].size() != V - 1) {
-                
+
     bool es_bipartito(int src)
     {
         vector<int> color(V, -1); // -1 representa un nodo sin color
@@ -223,7 +244,7 @@ void mostrarColoracion(const vector<Vertice>& grafo) {
         }
     }
 
-    bool es_euleriano()
+    bool es_euleriano
     {
         for (int i = 0; i < V; ++i)
         {
@@ -242,7 +263,7 @@ void mostrarColoracion(const vector<Vertice>& grafo) {
         visitados[0] = true;
         return hamiltoniano_util(0, visitados, camino);
     }
-        
+
     bool hamiltoniano_util(int v, vector<bool> &visitados, vector<int> &camino)
     {
         if (camino.size() == V)
@@ -267,13 +288,12 @@ void mostrarColoracion(const vector<Vertice>& grafo) {
         }
     }
 
-    }
 };
 
 int main() {
 
     string archivo;
-    cout << "Ingresa el nombre del archivo .txt: ";
+    cout << "Ingresa el nombre del archivo .txt con la ubicacion proporcionada: ";
     cin >> archivo;
     Grafo grafo(n);
 
@@ -286,44 +306,57 @@ int main() {
     int opcion;
     do
     {
+        cout << "\n\n\n\n\n";
+        cout << "*****************************************************************************************\n";
+        cout << " Analisis de Coordenadas de transporte\n";
+        cout << "*****************************************************************************************\n\n";
         cout << "\nMenu de opciones:" << endl;
-        cout << "1. Verificar si es bipartito" << endl;
-        cout << "2. Verificar si es completo" << endl;
-        cout << "3. Verificar si es conexo" << endl;
-        cout << "4. Verificar si es euleriano" << endl;
-        cout << "5. Verificar si es hamiltoniano" << endl;
+        cout << "1. Verificar si la coordenada es bipartita" << endl;
+        cout << "2. Verificar si la coordenada es completa" << endl;
+        cout << "3. Verificar si la coordenada es conexa" << endl;
+        cout << "4. Verificar si la coordenada es euleriana" << endl;
+        cout << "5. Verificar si la coordenada es hamiltoniana" << endl;
         cout << "6. Salir" << endl;
-        cout << "Elige una opción: ";
         cout << "Elige una opcion: ";
         cin >> opcion;
 
         switch (opcion) {
             case 1:
-                cout << (grafo.es_bipartito(0) ? "Es bipartito" : "No es bipartito") << endl;
+                cout << (grafo.Dijkstra() ? "Es bipartito" : "No es bipartito") << endl;
                 break;
             case 2:
-                cout << (grafo.es_completo() ? "Es completo" : "No es completo") << endl;
+                cout << (grafo.edmods_karp() ? "Es completo" : "No es completo") << endl;
                 break;
             case 3:
-                cout << (grafo.es_conexo() ? "Es conexo" : "No es conexo") << endl;
+                cout << (grafo.kruskal() ? "Es conexo" : "No es conexo") << endl;
                 break;
             case 4:
-                cout << (grafo.es_euleriano() ? "Es euleriano" : "No es euleriano") << endl;
+                cout << (grafo.es_bipartito(0) ? "Es bipartito" : "No es bipartito") << endl;
                 break;
             case 5:
-                cout << (grafo.es_hamiltoniano() ? "Es hamiltoniano" : "No es hamiltoniano") << endl;
+                cout << (grafo.es_completo() ? "Es completo" : "No es completo") << endl;
                 break;
             case 6:
+                cout << (grafo.es_conexo() ? "Es conexo" : "No es conexo") << endl;
+                break;
+            case 7:
+                cout << (grafo.es_euleriano() ? "Es euleriano" : "No es euleriano") << endl;
+                break;
+            case 8:
+                cout << (grafo.es_hamiltoniano() ? "Es hamiltoniano" : "No es hamiltoniano") << endl;
+                break;
+            case 9:
                 cout << "Saliendo del programa. ¡Hasta luego!" << endl;
                 break;
             default:
                 cout << "Opción no válida. Inténtalo de nuevo." << endl;
-    
-    } while (opcion != 6);
+
+    } while (opcion != 6)
 
 
     }
         }
+
 
 
 
